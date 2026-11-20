@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Componentes | NutriLab{% endblock %}
+{% block breadcrumb %}Tabla de componentes{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">REGISTRO NUTRICIONAL</p><h1>Tabla de componentes</h1><p class="lead">Consulta los nutrientes registrados y las cantidades de referencia por alimento.</p></div><span class="heading-symbol">◫</span></div>
+<div class="panel"><div class="panel-heading"><div><p class="eyebrow">DATOS DEL CATÁLOGO</p><h2>Componentes por alimento</h2></div><span class="pill">Valores ilustrativos</span></div><div class="table-wrap"><table><thead><tr><th>Alimento</th><th>Categoría</th>{% for nutrient in nutrient_names %}<th>{{ nutrient }}</th>{% endfor %}</tr></thead><tbody>{% for food in foods %}<tr><td><strong>{{ food.name }}</strong></td><td>{{ category_name(food.category_id) }}</td>{% for nutrient in nutrient_names %}<td>{{ food.nutrients.get(nutrient, '—') }}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div><p class="data-note">Las cantidades se muestran con fines demostrativos. En una versión conectada a la base de datos, cada componente tendrá su unidad de medida correspondiente.</p></div>
+{% endblock %}

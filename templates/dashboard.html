@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Vista general | NutriLab{% endblock %}
+{% block breadcrumb %}Vista general{% endblock %}
+{% block content %}
+<div class="welcome-row">
+ <div><p class="eyebrow">PANEL PRINCIPAL</p><h1>Explora la composición <span>de tus alimentos.</span></h1><p class="lead">Consulta nutrientes, conoce sus funciones y compara diferentes opciones desde un solo lugar.</p></div>
+ <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="fruit">◉</div><span class="spark s1">✳</span><span class="spark s2">✦</span></div>
+</div>
+<div class="stats-grid">
+ <article class="stat-card"><div class="stat-icon purple">▦</div><div><span>Alimentos registrados</span><strong>{{ foods|length }}</strong><small>En el catálogo de demostración</small></div></article>
+ <article class="stat-card"><div class="stat-icon green">✳</div><div><span>Categorías</span><strong>{{ categories|length }}</strong><small>Clasificación de alimentos</small></div></article>
+ <article class="stat-card"><div class="stat-icon orange">⇄</div><div><span>Herramientas</span><strong>02</strong><small>Consulta y comparación</small></div></article>
+</div>
+<div class="section-heading"><div><p class="eyebrow">EMPIEZA A EXPLORAR</p><h2>Accesos rápidos</h2></div></div>
+<div class="quick-grid">
+ <a class="quick-card" href="{{ url_for('catalog') }}"><span class="quick-icon purple">⌕</span><strong>Buscar alimentos</strong><p>Encuentra un alimento y revisa sus nutrientes.</p><span class="card-arrow">↗</span></a>
+ <a class="quick-card" href="{{ url_for('comparator') }}"><span class="quick-icon green">⇄</span><strong>Comparar alimentos</strong><p>Observa las diferencias entre sus componentes.</p><span class="card-arrow">↗</span></a>
+ <a class="quick-card" href="{{ url_for('vitamins') }}"><span class="quick-icon orange">✳</span><strong>Conocer vitaminas</strong><p>Consulta información general y fuentes alimentarias.</p><span class="card-arrow">↗</span></a>
+</div>
+<div class="section-heading recent-heading"><div><p class="eyebrow">TU ACTIVIDAD</p><h2>Consultas recientes</h2></div><a class="text-link" href="{{ url_for('history') }}">Ver historial →</a></div>
+{% if recent_foods %}
+<div class="food-list compact">{% for food in recent_foods %}<a href="{{ url_for('food_detail', food_id=food.id) }}"><span class="food-avatar">{{ food.name[0] }}</span><span><strong>{{ food.name }}</strong><small>{{ category_name(food.category_id) }}</small></span><span class="list-arrow">↗</span></a>{% endfor %}</div>
+{% else %}<div class="empty-state"><span>◷</span><strong>Aún no hay consultas</strong><p>Cuando revises un alimento, aparecerá aquí.</p><a class="button button-outline" href="{{ url_for('catalog') }}">Explorar catálogo</a></div>{% endif %}
+{% endblock %}

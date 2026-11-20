@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Comparador | NutriLab{% endblock %}
+{% block breadcrumb %}Comparador de alimentos{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">ANÁLISIS COMPARATIVO</p><h1>Comparador de alimentos</h1><p class="lead">Selecciona dos o más alimentos para observar sus valores nutricionales lado a lado.</p></div><span class="heading-symbol">⇄</span></div>
+<form method="post" class="panel compare-form"><div class="panel-heading"><div><p class="eyebrow">SELECCIÓN</p><h2>¿Qué alimentos deseas comparar?</h2></div><span class="pill">{{ foods|length }} disponibles</span></div>
+<div class="select-food-grid">{% for food in foods %}<label class="select-food"><input type="checkbox" name="food_ids" value="{{ food.id }}" {{ 'checked' if food in selected_foods else '' }}><span class="food-avatar">{{ food.name[0] }}</span><span><strong>{{ food.name }}</strong><small>{{ category_name(food.category_id) }}</small></span></label>{% endfor %}</div>
+<button class="button button-primary" type="submit">Generar comparación →</button></form>
+{% if selected_foods %}<section class="panel comparison-result"><div class="panel-heading"><div><p class="eyebrow">RESULTADO</p><h2>Comparación nutricional</h2></div></div>
+{% if selected_foods|length >= 2 %}<div class="table-wrap"><table><thead><tr><th>Componente</th>{% for food in selected_foods %}<th>{{ food.name }}</th>{% endfor %}</tr></thead><tbody>{% for nutrient in selected_foods[0].nutrients %}<tr><td>{{ nutrient }}</td>{% for food in selected_foods %}<td>{{ food.nutrients.get(nutrient, '—') }}{% if nutrient == 'Calorías' %} kcal{% else %} g{% endif %}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div>{% else %}<p class="inline-warning">Selecciona al menos dos alimentos para generar una comparación.</p>{% endif %}</section>{% endif %}
+{% endblock %}

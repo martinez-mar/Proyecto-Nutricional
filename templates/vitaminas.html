@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Vitaminas | NutriLab{% endblock %}
+{% block breadcrumb %}Información de vitaminas{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">GUÍA INFORMATIVA</p><h1>Información de vitaminas</h1><p class="lead">Conoce algunas vitaminas, sus funciones generales y alimentos en los que se encuentran.</p></div><span class="heading-symbol">✳</span></div>
+<div class="vitamin-grid">{% for vitamin in vitamins %}<article class="vitamin-card"><div class="vitamin-letter">{{ vitamin.name.split(' ')[-1] }}</div><h3>{{ vitamin.name }}</h3><p>{{ vitamin.function }}</p><div class="source-food"><small>FUENTES ALIMENTARIAS</small><strong>{{ vitamin.sources }}</strong></div></article>{% endfor %}</div>
+{% endblock %}

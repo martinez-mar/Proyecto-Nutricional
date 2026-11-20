@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Catálogo de alimentos | NutriLab{% endblock %}
+{% block breadcrumb %}Catálogo de alimentos{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">BASE DE CONSULTA</p><h1>Catálogo de alimentos</h1><p class="lead">Busca por nombre o filtra por categoría para consultar la información nutricional.</p></div><span class="heading-symbol">▦</span></div>
+<form class="filter-bar" method="get" action="{{ url_for('catalog') }}"><label class="search-box"><span>⌕</span><input type="search" name="q" value="{{ search }}" placeholder="Buscar alimento..." aria-label="Buscar alimento"></label><select name="categoria" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option>{% for category in categories %}<option value="{{ category.id }}" {{ 'selected' if selected_category == category.id|string else '' }}>{{ category.name }}</option>{% endfor %}</select><button class="button button-primary" type="submit">Buscar</button><a class="button button-ghost" href="{{ url_for('catalog') }}">Limpiar</a></form>
+<div class="results-caption"><strong>{{ foods|length }} resultados</strong><span>Selecciona un alimento para ver su ficha.</span></div>
+<div class="food-grid">{% for food in foods %}<a class="food-card" href="{{ url_for('food_detail', food_id=food.id) }}"><div class="food-card-top"><span class="food-avatar large">{{ food.name[0] }}</span><span class="pill">{{ category_name(food.category_id) }}</span></div><h3>{{ food.name }}</h3><p>{{ food.description }}</p><div class="food-card-bottom"><span>Porción de referencia: {{ food.portion }}</span><strong>Ver detalle ↗</strong></div></a>{% else %}<div class="empty-state full"><span>⌕</span><strong>No encontramos resultados</strong><p>Prueba con otro nombre o categoría.</p></div>{% endfor %}</div>
+{% endblock %}

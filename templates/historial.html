@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Historial | NutriLab{% endblock %}
+{% block breadcrumb %}Historial de consultas{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">ACTIVIDAD RECIENTE</p><h1>Historial de consultas</h1><p class="lead">Alimentos que has revisado durante esta sesión de demostración.</p></div><span class="heading-symbol">◷</span></div>
+<div class="panel"><div class="panel-heading"><div><p class="eyebrow">REGISTRO DE ACTIVIDAD</p><h2>Consultas realizadas</h2></div><span class="pill">{{ records|length }} registros</span></div>
+{% if records %}<div class="history-list">{% for record in records %}<a class="history-item" href="{{ url_for('food_detail', food_id=record.food.id) }}"><span class="food-avatar">{{ record.food.name[0] }}</span><span class="history-name"><strong>{{ record.food.name }}</strong><small>{{ category_name(record.food.category_id) }}</small></span><span class="history-date">{{ record.date }}</span><span>↗</span></a>{% endfor %}</div>{% else %}<div class="empty-state"><span>◷</span><strong>Tu historial está vacío</strong><p>Consulta algún alimento para que aparezca en esta sección.</p><a class="button button-outline" href="{{ url_for('catalog') }}">Ir al catálogo</a></div>{% endif %}</div>
+<p class="data-note">Este historial es temporal y se reinicia al finalizar la sesión. La versión futura lo almacenará por usuario en la base de datos.</p>
+{% endblock %}

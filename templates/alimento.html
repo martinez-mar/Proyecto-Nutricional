@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ food.name }} | NutriLab{% endblock %}
+{% block breadcrumb %}<a href="{{ url_for('catalog') }}">Catálogo</a> / {{ food.name }}{% endblock %}
+{% block content %}
+<a class="back-link" href="{{ url_for('catalog') }}">← Volver al catálogo</a>
+<div class="page-heading"><div><p class="eyebrow">{{ category_name(food.category_id)|upper }}</p><h1>{{ food.name }}</h1><p class="lead">{{ food.description }}</p></div><span class="heading-symbol">◉</span></div>
+<div class="detail-layout"><section class="panel"><div class="panel-heading"><div><p class="eyebrow">INFORMACIÓN NUTRICIONAL</p><h2>Composición por porción</h2></div><span class="pill">{{ food.portion }}</span></div>
+<div class="nutrient-list">{% for name, amount in food.nutrients.items() %}<div class="nutrient-row"><span>{{ name }}</span><strong>{{ amount }}{% if name != 'Calorías' %} g{% else %} kcal{% endif %}</strong></div>{% endfor %}</div>
+<p class="data-note">Datos de ejemplo para demostración. Los valores reales pueden variar según variedad, preparación y fuente consultada.</p></section>
+<aside class="panel side-panel"><span class="side-icon">✦</span><h3>¿Qué puedes hacer?</h3><p>Incluye este alimento en una comparación para revisar sus componentes junto con otras opciones.</p><a class="button button-primary button-block" href="{{ url_for('comparator', food_ids=food.id) }}">Comparar alimento</a><a class="button button-outline button-block" href="{{ url_for('components') }}">Ver componentes</a></aside></div>
+{% endblock %}
